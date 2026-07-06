@@ -4,29 +4,35 @@ import Link from "next/link";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { useState } from "react";
-import { BIDANG } from "@/lib/data";
+import type { Bidang } from "@/lib/types";
 
-const MENU: { label: string; href: string; children?: { label: string; href: string }[] }[] = [
-  { label: "Beranda", href: "/" },
-  { label: "Profil", href: "/profil" },
-  { label: "Struktur Pengurus", href: "/pengurus" },
-  {
-    label: "Program Kerja",
-    href: "/program-kerja",
-    children: [
-      { label: "Semua Bidang", href: "/program-kerja" },
-      ...BIDANG.map((b) => ({ label: b.nama, href: `/program-kerja/${b.slug}` })),
-    ],
-  },
-  { label: "Kalender Kegiatan", href: "/kalender" },
-  { label: "Agenda Terbaru", href: "/agenda" },
-  { label: "Kontak", href: "/kontak" },
-];
-
-export default function Navbar() {
+export default function Navbar({
+  bidang,
+  orgSingkatan,
+}: {
+  bidang: Bidang[];
+  orgSingkatan: string;
+}) {
   const pathname = usePathname();
   const [mobileOpen, setMobileOpen] = useState(false);
   const [openDropdown, setOpenDropdown] = useState<string | null>(null);
+
+  const MENU: { label: string; href: string; children?: { label: string; href: string }[] }[] = [
+    { label: "Beranda", href: "/" },
+    { label: "Profil", href: "/profil" },
+    { label: "Struktur Pengurus", href: "/pengurus" },
+    {
+      label: "Program Kerja",
+      href: "/program-kerja",
+      children: [
+        { label: "Semua Bidang", href: "/program-kerja" },
+        ...bidang.map((b) => ({ label: b.nama, href: `/program-kerja/${b.slug}` })),
+      ],
+    },
+    { label: "Kalender Kegiatan", href: "/kalender" },
+    { label: "Agenda Terbaru", href: "/agenda" },
+    { label: "Kontak", href: "/kontak" },
+  ];
 
   function isActive(href: string) {
     if (href === "/") return pathname === "/";
@@ -46,7 +52,7 @@ export default function Navbar() {
             priority
           />
           <span className="leading-tight">
-            <span className="block text-sm font-semibold sm:text-base">RASYA</span>
+            <span className="block text-sm font-semibold sm:text-base">{orgSingkatan}</span>
             <span className="block text-[10px] font-normal text-white/70 sm:text-xs">
               Rayon Fakultas Syariah
             </span>

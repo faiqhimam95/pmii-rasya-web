@@ -1,11 +1,8 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { BIDANG, getBidang } from "@/lib/data";
-
-export function generateStaticParams() {
-  return BIDANG.map((b) => ({ slug: b.slug }));
-}
+import { getContent } from "@/lib/content-store";
+import { getBidang } from "@/lib/content-helpers";
 
 export async function generateMetadata({
   params,
@@ -13,7 +10,8 @@ export async function generateMetadata({
   params: Promise<{ slug: string }>;
 }): Promise<Metadata> {
   const { slug } = await params;
-  const bidang = getBidang(slug);
+  const content = await getContent();
+  const bidang = getBidang(content, slug);
   return { title: bidang ? `${bidang.nama} | Program Kerja` : "Program Kerja" };
 }
 
@@ -23,7 +21,8 @@ export default async function ProgramKerjaDetailPage({
   params: Promise<{ slug: string }>;
 }) {
   const { slug } = await params;
-  const bidang = getBidang(slug);
+  const content = await getContent();
+  const bidang = getBidang(content, slug);
   if (!bidang) notFound();
 
   return (

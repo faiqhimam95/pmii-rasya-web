@@ -1,11 +1,13 @@
 import type { Metadata } from "next";
-import { ORG } from "@/lib/data";
+import { getContent } from "@/lib/content-store";
 
 export const metadata: Metadata = {
   title: "Kontak | PMII Rayon Fakultas Syariah",
 };
 
-export default function KontakPage() {
+export default async function KontakPage() {
+  const { org: ORG } = await getContent();
+
   return (
     <div className="container-page py-10">
       <h1 className="text-2xl font-bold text-[var(--brand)] sm:text-3xl">Kontak</h1>

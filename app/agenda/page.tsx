@@ -1,13 +1,15 @@
 import type { Metadata } from "next";
-import { getKegiatanRutin } from "@/lib/data";
+import { getContent } from "@/lib/content-store";
+import { getKegiatanRutin } from "@/lib/content-helpers";
 import UpcomingList from "@/components/UpcomingList";
 
 export const metadata: Metadata = {
   title: "Agenda Terbaru | PMII Rayon Fakultas Syariah",
 };
 
-export default function AgendaPage() {
-  const kegiatanRutin = getKegiatanRutin();
+export default async function AgendaPage() {
+  const content = await getContent();
+  const kegiatanRutin = getKegiatanRutin(content.bidang);
 
   return (
     <div className="container-page py-10">
@@ -18,7 +20,7 @@ export default function AgendaPage() {
       </p>
 
       <div className="mt-6">
-        <UpcomingList />
+        <UpcomingList bidang={content.bidang} />
       </div>
 
       {kegiatanRutin.length > 0 && (

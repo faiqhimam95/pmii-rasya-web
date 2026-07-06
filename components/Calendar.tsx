@@ -2,8 +2,9 @@
 
 import { useMemo, useState } from "react";
 import Link from "next/link";
-import { allAgendaWithBidang, getKegiatanRutin } from "@/lib/data";
+import { allAgendaWithBidang, getKegiatanRutin } from "@/lib/content-helpers";
 import { occurrencesInMonth, HARI, BULAN } from "@/lib/schedule";
+import type { Bidang } from "@/lib/types";
 
 interface DayEvent {
   bidangNama: string;
@@ -13,7 +14,7 @@ interface DayEvent {
   waktuText: string;
 }
 
-export default function Calendar() {
+export default function Calendar({ bidang }: { bidang: Bidang[] }) {
   const today = useMemo(() => new Date(), []);
   const [cursor, setCursor] = useState(() => new Date(today.getFullYear(), today.getMonth(), 1));
   const [selectedDay, setSelectedDay] = useState<number | null>(today.getDate());
@@ -24,14 +25,14 @@ export default function Calendar() {
 
   const eventsByDay = useMemo(() => {
     const map = new Map<number, DayEvent[]>();
-    for (const { bidang, agenda } of allAgendaWithBidang()) {
+    for (const { bidang: b, agenda } of allAgendaWithBidang(bidang)) {
       for (const rule of agenda.jadwal) {
         for (const d of occurrencesInMonth(rule, year, month)) {
           const day = d.getDate();
           const list = map.get(day) ?? [];
           list.push({
-            bidangNama: bidang.nama,
-            bidangSlug: bidang.slug,
+            bidangNama: b.nama,
+            bidangSlug: b.slug,
             agendaNama: agenda.nama,
             agendaId: agenda.id,
             waktuText: agenda.waktuText,
@@ -41,7 +42,7 @@ export default function Calendar() {
       }
     }
     return map;
-  }, [year, month]);
+  }, [bidang, year, month]);
 
   const daysInMonth = new Date(year, month + 1, 0).getDate();
   const firstWeekday = new Date(year, month, 1).getDay();
@@ -51,7 +52,7 @@ export default function Calendar() {
   ];
   while (cells.length % 7 !== 0) cells.push(null);
 
-  const kegiatanRutin = getKegiatanRutin();
+  const kegiatanRutin = getKegiatanRutin(bidang);
 
   return (
     <div>

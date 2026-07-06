@@ -1,11 +1,14 @@
 import type { Metadata } from "next";
 import Calendar from "@/components/Calendar";
+import { getContent } from "@/lib/content-store";
 
 export const metadata: Metadata = {
   title: "Kalender Kegiatan | PMII Rayon Fakultas Syariah",
 };
 
-export default function KalenderPage() {
+export default async function KalenderPage() {
+  const content = await getContent();
+
   return (
     <div className="container-page py-10">
       <h1 className="text-2xl font-bold text-[var(--brand)] sm:text-3xl">Kalender Kegiatan</h1>
@@ -14,7 +17,7 @@ export default function KalenderPage() {
         kalender. Klik tanggal yang bertanda titik untuk melihat detail kegiatannya.
       </p>
       <div className="mt-6">
-        <Calendar />
+        <Calendar bidang={content.bidang} />
       </div>
     </div>
   );

@@ -1,11 +1,14 @@
 import type { Metadata } from "next";
-import { MISI, ORG, SAMBUTAN, TUPOKSI_KETUA_UMUM, VISI } from "@/lib/data";
+import { getContent } from "@/lib/content-store";
 
 export const metadata: Metadata = {
   title: "Profil | PMII Rayon Fakultas Syariah",
 };
 
-export default function ProfilPage() {
+export default async function ProfilPage() {
+  const content = await getContent();
+  const { org: ORG, visi: VISI, misi: MISI, sambutan: SAMBUTAN, tupoksiKetuaUmum: TUPOKSI_KETUA_UMUM } = content;
+
   return (
     <div className="container-page py-10">
       <h1 className="text-2xl font-bold text-[var(--brand)] sm:text-3xl">Profil Organisasi</h1>

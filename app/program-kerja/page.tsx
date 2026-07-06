@@ -1,18 +1,27 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { BIDANG } from "@/lib/data";
+import { getContent } from "@/lib/content-store";
 
 export const metadata: Metadata = {
   title: "Program Kerja | PMII Rayon Fakultas Syariah",
 };
 
-const GROUPS: { title: string; slugs: string[] }[] = [
+const KNOWN_GROUPS: { title: string; slugs: string[] }[] = [
   { title: "Pengurus Inti", slugs: ["sekretaris-umum", "bendahara-umum"] },
   { title: "Bidang", slugs: ["kaderisasi", "keilmuan", "advokasi-gerakan", "psdm"] },
   { title: "Korps PMII Putri (Kopri)", slugs: ["kopri", "kopri-kaderisasi", "kopri-keilmuan"] },
 ];
 
-export default function ProgramKerjaIndexPage() {
+export default async function ProgramKerjaIndexPage() {
+  const content = await getContent();
+  const { bidang: BIDANG } = content;
+
+  const knownSlugs = new Set(KNOWN_GROUPS.flatMap((g) => g.slugs));
+  const lainnya = BIDANG.filter((b) => !knownSlugs.has(b.slug));
+  const groups = lainnya.length > 0
+    ? [...KNOWN_GROUPS, { title: "Lainnya", slugs: lainnya.map((b) => b.slug) }]
+    : KNOWN_GROUPS;
+
   return (
     <div className="container-page py-10">
       <h1 className="text-2xl font-bold text-[var(--brand)] sm:text-3xl">Program Kerja</h1>
@@ -21,7 +30,7 @@ export default function ProgramKerjaIndexPage() {
         per bidang. Pilih salah satu untuk melihat rincian tugas pokok, fungsi, dan agendanya.
       </p>
 
-      {GROUPS.map((group) => (
+      {groups.map((group) => (
         <div key={group.title} className="mt-8">
           <h2 className="text-lg font-bold text-[var(--brand)]">{group.title}</h2>
           <div className="mt-3 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">

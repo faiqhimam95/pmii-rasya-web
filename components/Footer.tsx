@@ -1,8 +1,8 @@
 import Link from "next/link";
 import Image from "next/image";
-import { ORG } from "@/lib/data";
+import type { OrgInfo } from "@/lib/types";
 
-export default function Footer() {
+export default function Footer({ org: ORG }: { org: OrgInfo }) {
   return (
     <footer className="mt-16 border-t border-border bg-[var(--brand-dark)] text-white/80">
       <div className="container-page grid gap-8 py-10 sm:grid-cols-3">

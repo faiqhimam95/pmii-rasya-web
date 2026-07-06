@@ -4,6 +4,7 @@ import "./globals.css";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import NotificationBanner from "@/components/NotificationBanner";
+import { getContent } from "@/lib/content-store";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -21,21 +22,23 @@ export const metadata: Metadata = {
     "Website resmi PMII Rayon Fakultas Syariah, Komisariat UIN KHAS Jember, masa khidmat 2026/2027. Profil, struktur pengurus, program kerja, dan agenda kegiatan.",
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const content = await getContent();
+
   return (
     <html
       lang="id"
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
     >
       <body className="flex min-h-full flex-col">
-        <Navbar />
-        <NotificationBanner />
+        <Navbar bidang={content.bidang} orgSingkatan={content.org.singkatan} />
+        <NotificationBanner bidang={content.bidang} />
         <main className="flex-1">{children}</main>
-        <Footer />
+        <Footer org={content.org} />
       </body>
     </html>
   );

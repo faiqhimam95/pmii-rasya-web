@@ -2,21 +2,22 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import { getUpcoming } from "@/lib/data";
+import { getUpcoming } from "@/lib/content-helpers";
 import { diffHari, labelHariLagi, formatTanggal } from "@/lib/schedule";
 import { useNow } from "@/lib/useNow";
 import { useLocalStorageValue } from "@/lib/useLocalStorageValue";
+import type { Bidang } from "@/lib/types";
 
 const DISMISS_KEY = "rasya-notif-dismissed-until";
 
-export default function NotificationBanner() {
+export default function NotificationBanner({ bidang }: { bidang: Bidang[] }) {
   const now = useNow();
   const dismissedUntil = useLocalStorageValue(DISMISS_KEY);
   const [manuallyDismissed, setManuallyDismissed] = useState(false);
 
   if (!now) return null;
 
-  const nearest = getUpcoming(now)[0];
+  const nearest = getUpcoming(bidang, now)[0];
   if (!nearest) return null;
 
   const iso = nearest.date.toISOString().slice(0, 10);

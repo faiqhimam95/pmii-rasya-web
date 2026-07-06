@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { BIDANG, PENGURUS_INTI } from "@/lib/data";
+import { getContent } from "@/lib/content-store";
+import type { Bidang } from "@/lib/types";
 
 export const metadata: Metadata = {
   title: "Struktur Pengurus | PMII Rayon Fakultas Syariah",
@@ -22,8 +23,7 @@ function PersonCard({ jabatan, nama }: { jabatan: string; nama: string }) {
   );
 }
 
-function BidangCard({ slug }: { slug: string }) {
-  const bidang = BIDANG.find((b) => b.slug === slug)!;
+function BidangCard({ bidang }: { bidang: Bidang }) {
   return (
     <div className="rounded-xl border border-border bg-[var(--card)] p-5">
       <div className="font-bold text-[var(--brand)]">{bidang.nama}</div>
@@ -50,7 +50,10 @@ function BidangCard({ slug }: { slug: string }) {
   );
 }
 
-export default function PengurusPage() {
+export default async function PengurusPage() {
+  const content = await getContent();
+  const { bidang: BIDANG, pengurusInti: PENGURUS_INTI } = content;
+
   const bidangUtama = BIDANG.filter((b) =>
     ["kaderisasi", "keilmuan", "advokasi-gerakan", "psdm"].includes(b.slug)
   );
@@ -74,7 +77,7 @@ export default function PengurusPage() {
       <h2 className="mt-10 text-lg font-bold text-[var(--brand)]">Bidang-Bidang</h2>
       <div className="mt-3 grid gap-4 sm:grid-cols-2">
         {bidangUtama.map((b) => (
-          <BidangCard key={b.slug} slug={b.slug} />
+          <BidangCard key={b.slug} bidang={b} />
         ))}
       </div>
 
@@ -86,7 +89,7 @@ export default function PengurusPage() {
       </div>
       <div className="mt-4 grid gap-4 sm:grid-cols-2">
         {kopriBiro.map((b) => (
-          <BidangCard key={b.slug} slug={b.slug} />
+          <BidangCard key={b.slug} bidang={b} />
         ))}
       </div>
     </div>

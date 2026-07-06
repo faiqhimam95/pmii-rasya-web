@@ -1,12 +1,13 @@
 "use client";
 
 import Link from "next/link";
-import { getUpcoming } from "@/lib/data";
+import { getUpcoming } from "@/lib/content-helpers";
 import { formatTanggal } from "@/lib/schedule";
 import { useNow } from "@/lib/useNow";
+import type { Bidang } from "@/lib/types";
 import Countdown from "./Countdown";
 
-export default function UpcomingList({ limit }: { limit?: number }) {
+export default function UpcomingList({ bidang, limit }: { bidang: Bidang[]; limit?: number }) {
   const now = useNow();
 
   if (!now) {
@@ -19,7 +20,7 @@ export default function UpcomingList({ limit }: { limit?: number }) {
     );
   }
 
-  const all = getUpcoming(now);
+  const all = getUpcoming(bidang, now);
   const items = limit ? all.slice(0, limit) : all;
 
   if (items.length === 0) {

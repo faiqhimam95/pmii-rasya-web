@@ -1,8 +1,11 @@
 import Link from "next/link";
-import { BIDANG, ORG, VISI, SAMBUTAN } from "@/lib/data";
+import { getContent } from "@/lib/content-store";
 import UpcomingList from "@/components/UpcomingList";
 
-export default function Home() {
+export default async function Home() {
+  const content = await getContent();
+  const { org: ORG, visi: VISI, sambutan: SAMBUTAN, bidang: BIDANG } = content;
+
   return (
     <div>
       <section className="bg-gradient-to-b from-[var(--brand-dark)] to-[var(--brand)] text-white">
@@ -36,7 +39,7 @@ export default function Home() {
               🔔 Agenda Terdekat
             </h2>
             <div className="mt-3">
-              <UpcomingList limit={4} />
+              <UpcomingList bidang={BIDANG} limit={4} />
             </div>
             <Link href="/agenda" className="mt-3 inline-block text-sm font-medium text-[var(--gold)] hover:underline">
               Lihat semua agenda →
