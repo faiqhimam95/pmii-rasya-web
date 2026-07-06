@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 import { ORG } from "@/lib/data";
 
 export default function Footer() {
@@ -7,9 +8,13 @@ export default function Footer() {
       <div className="container-page grid gap-8 py-10 sm:grid-cols-3">
         <div>
           <div className="flex items-center gap-2 font-bold text-white">
-            <span className="flex h-8 w-8 items-center justify-center rounded-full bg-[var(--gold)] text-[10px] font-extrabold text-[var(--brand-dark)]">
-              PMII
-            </span>
+            <Image
+              src="/logo.svg"
+              alt="Lambang PMII"
+              width={36}
+              height={36}
+              className="h-8 w-8 object-contain"
+            />
             Rayon Fakultas Syariah
           </div>
           <p className="mt-3 text-sm">

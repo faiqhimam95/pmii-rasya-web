@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { useState } from "react";
 import { BIDANG } from "@/lib/data";
@@ -36,9 +37,14 @@ export default function Navbar() {
     <header className="sticky top-0 z-40 border-b border-border bg-[var(--brand-dark)] text-white">
       <div className="container-page flex h-16 items-center justify-between">
         <Link href="/" className="flex items-center gap-2 font-bold tracking-wide">
-          <span className="flex h-9 w-9 items-center justify-center rounded-full bg-[var(--gold)] text-xs font-extrabold text-[var(--brand-dark)]">
-            PMII
-          </span>
+          <Image
+            src="/logo.svg"
+            alt="Lambang PMII"
+            width={40}
+            height={40}
+            className="h-9 w-9 object-contain"
+            priority
+          />
           <span className="leading-tight">
             <span className="block text-sm font-semibold sm:text-base">RASYA</span>
             <span className="block text-[10px] font-normal text-white/70 sm:text-xs">
