@@ -3,7 +3,6 @@
 import { getUpcoming } from "@/lib/content-helpers";
 import { formatTanggal } from "@/lib/schedule";
 import { useNow } from "@/lib/useNow";
-import { buildAgendaIcsDataUri } from "@/lib/ics";
 import type { Bidang } from "@/lib/types";
 import Countdown from "./Countdown";
 
@@ -32,8 +31,9 @@ export default function UpcomingList({ bidang, limit }: { bidang: Bidang[]; limi
       {items.map((item) => (
         <a
           key={item.agenda.id}
-          href={buildAgendaIcsDataUri(item.agenda, item.bidang, item.date)}
-          download={`${item.agenda.id}.ics`}
+          href={`/api/agenda/${item.agenda.id}/ics?date=${item.date.toISOString().slice(0, 10)}`}
+          target="_blank"
+          rel="noopener noreferrer"
           title="Tambahkan ke kalender HP sebagai pengingat"
           className="flex items-center justify-between gap-3 rounded-lg border border-border bg-[var(--card)] p-3 transition-colors hover:border-[var(--brand)]"
         >

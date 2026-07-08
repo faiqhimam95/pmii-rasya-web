@@ -21,7 +21,7 @@ function escapeIcsText(s: string): string {
   return s.replace(/\\/g, "\\\\").replace(/;/g, "\\;").replace(/,/g, "\\,").replace(/\n/g, "\\n");
 }
 
-function buildAgendaIcs(agenda: Agenda, bidang: Bidang, date: Date): string {
+export function buildAgendaIcs(agenda: Agenda, bidang: Bidang, date: Date): string {
   const dtEnd = new Date(date);
   dtEnd.setDate(dtEnd.getDate() + 1);
   const description = [bidang.nama, agenda.tujuan].filter(Boolean).join(" — ");
@@ -47,10 +47,4 @@ function buildAgendaIcs(agenda: Agenda, bidang: Bidang, date: Date): string {
     "END:VCALENDAR",
   ];
   return lines.join("\r\n");
-}
-
-/** A `data:` URI suitable for an `<a href download>` that opens the phone's calendar app. */
-export function buildAgendaIcsDataUri(agenda: Agenda, bidang: Bidang, date: Date): string {
-  const ics = buildAgendaIcs(agenda, bidang, date);
-  return `data:text/calendar;charset=utf-8,${encodeURIComponent(ics)}`;
 }
