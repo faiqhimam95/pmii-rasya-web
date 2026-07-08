@@ -1,9 +1,9 @@
 "use client";
 
-import Link from "next/link";
 import { getUpcoming } from "@/lib/content-helpers";
 import { formatTanggal } from "@/lib/schedule";
 import { useNow } from "@/lib/useNow";
+import { buildAgendaIcsDataUri } from "@/lib/ics";
 import type { Bidang } from "@/lib/types";
 import Countdown from "./Countdown";
 
@@ -30,9 +30,11 @@ export default function UpcomingList({ bidang, limit }: { bidang: Bidang[]; limi
   return (
     <div className="flex flex-col gap-2">
       {items.map((item) => (
-        <Link
+        <a
           key={item.agenda.id}
-          href={`/program-kerja/${item.bidang.slug}#${item.agenda.id}`}
+          href={buildAgendaIcsDataUri(item.agenda, item.bidang, item.date)}
+          download={`${item.agenda.id}.ics`}
+          title="Tambahkan ke kalender HP sebagai pengingat"
           className="flex items-center justify-between gap-3 rounded-lg border border-border bg-[var(--card)] p-3 transition-colors hover:border-[var(--brand)]"
         >
           <div>
@@ -42,7 +44,7 @@ export default function UpcomingList({ bidang, limit }: { bidang: Bidang[]; limi
             </div>
           </div>
           <Countdown target={item.date} />
-        </Link>
+        </a>
       ))}
     </div>
   );
