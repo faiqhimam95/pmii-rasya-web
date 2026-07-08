@@ -36,7 +36,7 @@ export default function UpcomingList({ bidang, limit }: { bidang: Bidang[]; limi
           className="flex items-center justify-between gap-3 rounded-lg border border-border bg-[var(--card)] p-3 transition-colors hover:border-[var(--brand)]"
         >
           <div>
-            <div className="font-medium">{item.agenda.nama}</div>
+            <div className="font-medium text-[var(--foreground)]">{item.agenda.nama}</div>
             <div className="text-xs text-[var(--muted)]">
               {item.bidang.nama} &middot; {formatTanggal(item.date.toISOString().slice(0, 10))}
             </div>
