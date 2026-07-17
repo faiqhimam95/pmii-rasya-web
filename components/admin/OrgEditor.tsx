@@ -63,7 +63,7 @@ export default function OrgEditor({
       </section>
 
       <section>
-        <h3 className="mb-2 font-semibold text-[var(--brand)]">Majelis Pembina Harian (MABINRA)</h3>
+        <h3 className="mb-2 font-semibold text-[var(--brand)]">Majelis Pembina Rayon (MABINRA)</h3>
         <StringListEditor
           items={mabinra}
           onChange={(mabinra) => onChange({ ...content, mabinra })}

@@ -67,7 +67,7 @@ export default async function PengurusPage() {
         Susunan pengurus PMII Rayon Fakultas Syariah, Komisariat UIN KHAS Jember, masa khidmat 2026/2027.
       </p>
 
-      <h2 className="mt-8 text-lg font-bold text-[var(--brand)]">Majelis Pembina Harian (MABINRA)</h2>
+      <h2 className="mt-8 text-lg font-bold text-[var(--brand)]">Majelis Pembina Rayon (MABINRA)</h2>
       <div className="mt-3 grid grid-cols-2 gap-4 sm:grid-cols-3">
         {MABINRA.map((nama) => (
           <PersonCard key={nama} nama={nama} />
