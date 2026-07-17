@@ -59,7 +59,8 @@ export const getContent = cache(async (): Promise<SiteContent> => {
   `;
   if (rows.length > 0) {
     const raw = rows[0].data;
-    return typeof raw === "string" ? (JSON.parse(raw) as SiteContent) : raw;
+    const parsed = typeof raw === "string" ? (JSON.parse(raw) as SiteContent) : raw;
+    return { ...DEFAULT_CONTENT, ...parsed };
   }
   await sql`
     INSERT INTO rasya_site_content (id, data) VALUES (1, ${JSON.stringify(DEFAULT_CONTENT)}::jsonb)

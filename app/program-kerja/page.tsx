@@ -7,7 +7,7 @@ export const metadata: Metadata = {
 };
 
 const KNOWN_GROUPS: { title: string; slugs: string[] }[] = [
-  { title: "Pengurus Inti", slugs: ["sekretaris-umum", "bendahara-umum"] },
+  { title: "Badan Pengurus Harian (BPH)", slugs: ["sekretaris-umum", "bendahara-umum"] },
   { title: "Bidang", slugs: ["kaderisasi", "keilmuan", "advokasi-gerakan", "psdm"] },
   { title: "Korps PMII Putri (Kopri)", slugs: ["kopri", "kopri-kaderisasi", "kopri-keilmuan"] },
 ];

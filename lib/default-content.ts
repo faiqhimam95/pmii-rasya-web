@@ -55,6 +55,14 @@ export const DEFAULT_CONTENT: SiteContent = {
     "Mengondisikan proses segenap pengurus dalam satu periode penuh.",
   ],
 
+  mabinra: [
+    "Anwar Nuris, S.H.I",
+    "Anis Rohmatullah, S.H., M. H",
+    "Siti Nurholilah, S.H., M.H",
+    "Istiqomah Fadhlillah, S.H., M.H",
+    "Ahmad Rofiki, S.H",
+  ],
+
   pengurusInti: {
     ketuaUmum: "Muhammad Yusril Faizi",
     sekretarisUmum: "Agiel Ramsyi A.H",

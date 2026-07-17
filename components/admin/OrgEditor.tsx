@@ -10,7 +10,7 @@ export default function OrgEditor({
   content: SiteContent;
   onChange: (content: SiteContent) => void;
 }) {
-  const { org, sambutan, pengurusInti } = content;
+  const { org, sambutan, pengurusInti, mabinra } = content;
 
   return (
     <div className="flex flex-col gap-8">
@@ -63,7 +63,16 @@ export default function OrgEditor({
       </section>
 
       <section>
-        <h3 className="mb-2 font-semibold text-[var(--brand)]">Pengurus Inti</h3>
+        <h3 className="mb-2 font-semibold text-[var(--brand)]">Majelis Pembina Harian (MABINRA)</h3>
+        <StringListEditor
+          items={mabinra}
+          onChange={(mabinra) => onChange({ ...content, mabinra })}
+          placeholder="Nama anggota MABINRA"
+        />
+      </section>
+
+      <section>
+        <h3 className="mb-2 font-semibold text-[var(--brand)]">Badan Pengurus Harian (BPH)</h3>
         <div className="grid gap-3 sm:grid-cols-3">
           <label className="text-sm font-medium">
             Ketua Umum

@@ -49,6 +49,7 @@ export interface SiteContent {
   misi: string[];
   sambutan: Sambutan;
   tupoksiKetuaUmum: string[];
+  mabinra: string[];
   pengurusInti: PengurusInti;
   bidang: Bidang[];
 }
